@@ -15,7 +15,7 @@ const Header = async () => {
           src="/logo.png"
           width={150}
           height={60}
-          alt="Sceduler Logo"
+          alt="Scheduler Logo"
           className="h-16 w-auto"
         />
       </Link>
