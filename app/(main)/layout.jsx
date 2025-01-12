@@ -1,10 +1,10 @@
 "use client";
-import { useUser } from "@clerk/nextjs";
-import React from "react";
-import { BarLoader } from "react-spinners";
-import { Calendar, Clock, BarChart , Users} from "lucide-react";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Calendar, BarChart, Users, Clock } from "lucide-react";
+import { BarLoader } from "react-spinners";
+import { useUser } from "@clerk/nextjs";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: BarChart },
@@ -12,15 +12,17 @@ const navItems = [
   { href: "/meetings", label: "Meetings", icon: Users },
   { href: "/availability", label: "Availability", icon: Clock },
 ];
-const AppLayout = ({ children }) => {
+
+export default function AppLayout({ children }) {
   const pathname = usePathname();
   const { isLoaded } = useUser();
+
   return (
     <>
       {!isLoaded && <BarLoader width={"100%"} color="#36d7b7" />}
-      {children}
-     <div className="flex flex-col h-screen bg-blue-50 md:flex-row">
-     <aside className="hidden md:block w-64 bg-white">
+      <div className="flex flex-col h-screen bg-blue-50 md:flex-row">
+        {/* Sidebar for medium screens and up */}
+        <aside className="hidden md:block w-64 bg-white">
           <nav className="mt-8">
             <ul>
               {navItems.map((item) => (
@@ -39,8 +41,9 @@ const AppLayout = ({ children }) => {
             </ul>
           </nav>
         </aside>
-         {/* Main content */}
-         <main className="flex-1 overflow-y-auto p-4 md:p-8">
+
+        {/* Main content */}
+        <main className="flex-1 overflow-y-auto p-4 md:p-8">
           <header className="flex justify-between items-center mb-4">
             <h2 className="text-5xl md:text-6xl gradient-title pt-2 md:pt-0 text-center md:text-left w-full">
               {navItems.find((item) => item.href === pathname)?.label ||
@@ -49,8 +52,9 @@ const AppLayout = ({ children }) => {
           </header>
           {children}
         </main>
-         {/* Bottom tabs for small screens */}
-         <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-md">
+
+        {/* Bottom tabs for small screens */}
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-md">
           <ul className="flex justify-around">
             {navItems.map((item) => (
               <li key={item.href}>
@@ -67,9 +71,7 @@ const AppLayout = ({ children }) => {
             ))}
           </ul>
         </nav>
-     </div>
+      </div>
     </>
   );
-};
-
-export default AppLayout;
+}
