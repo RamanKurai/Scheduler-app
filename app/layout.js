@@ -2,6 +2,7 @@ import {Inter} from "next/font/google"
 import "./globals.css";
 import Header from "@/components/Header";
 import { ClerkProvider } from "@clerk/nextjs";
+import CreateEventDrawer from "@/components/create-event";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
               <p>Made with 💗 by Raman Kurai</p>
             </div>
           </footer>
+          <CreateEventDrawer/>
         </body>
       </html>
      </ClerkProvider>
