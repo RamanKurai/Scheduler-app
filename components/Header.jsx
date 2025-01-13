@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 import { Button } from "./ui/button";
 import { PenBox } from "lucide-react";
-import { SignedIn, SignedOut , SignInButton, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut , SignInButton } from "@clerk/nextjs";
 import UserMenu from "./User-Menu";
 import { checkUser } from "@/lib/checkUser";
 const Header = async () => {
