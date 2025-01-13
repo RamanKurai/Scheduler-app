@@ -1,6 +1,7 @@
+"use client"
 import useFetch from '@/hooks/use-fetch';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import { Textarea } from './ui/textarea';
@@ -8,9 +9,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { eventSchema } from '@/app/lib/validator';
+import { createEvent } from '@/actions/events';
 
-const EventForm = ({ initialData = {} }) => {
-    // const router = useRouter();
+const EventForm = ({onSubmitForm}) => {
+    const router = useRouter();
     const {
         register,
         control,
@@ -19,24 +21,22 @@ const EventForm = ({ initialData = {} }) => {
     } = useForm({
         resolver: zodResolver(eventSchema),
         defaultValues :{
-            title: initialData.title || "",
-            description: initialData.description || "",
-            duration: initialData.duration || 30,
-            isPrivate: initialData.isPrivate ?? true,
+           duration: 30,
+           isPrivate:true,
         }
     })
 
-    // const { loading , data , fn , error} = useFetch(createEvent)
+    const { loading ,  fn: fnCreateEvent , error } = useFetch(createEvent)
 
-    // const onSubmit = async (data) => {
-    //     await fnCreateEvent(data);
-    //     if (!loading && !error) onSubmitForm();
-    //     router.refresh(); // Refresh the page to show updated data
-    //   };
+    const onSubmit = async (data) => {
+        await fnCreateEvent(data);
+        if (!loading && !error) onSubmitForm();
+        router.refresh(); // Refresh the page to show updated data
+      };
   return (
     <form
       className="px-6 flex flex-col gap-4"
-    //   onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <div>
         <label
@@ -122,10 +122,11 @@ const EventForm = ({ initialData = {} }) => {
         />
       </div>
 
-      {errors && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
+      {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
 
-      <Button type="submit">
-    Submit
+      <Button type="submit" 
+      disabled={loading}>
+    {loading ? "Submitting..." : "CreateEvent"}
       </Button>
     </form>
   );
