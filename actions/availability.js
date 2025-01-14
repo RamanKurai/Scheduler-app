@@ -1,6 +1,6 @@
 "use server"
 import { db } from "@/lib/prisma";
-import { auth } from "@clerk/nextjs/dist/types/server";
+import { auth } from "@clerk/nextjs/server";
 
 export async function getUserAvailability() {
   const { userId } = await auth();
@@ -53,4 +53,65 @@ export async function getUserAvailability() {
   });
 
   return availabilityData;
+}
+
+export async function updateAvailability(data) {
+    const { userId } = await auth();
+    if (!userId) {
+      throw new Error("Unauthorized");
+    }
+
+    const user = await db.user.findUnique({
+        where: {
+          clerkUserId: userId,
+        },
+        include: {
+          availability: true
+        },
+      });
+    
+      if (!user) {
+        throw new Error("User Not Found")
+      }
+      const availabilityData = Object.entries(data).flatMap(
+        ([day, { isAvailable, startTime, endTime }]) => {
+          if (isAvailable) {
+            const baseDate = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
+    
+            return [
+              {
+                day: day.toUpperCase(),
+                startTime: new Date(`${baseDate}T${startTime}:00Z`),
+                endTime: new Date(`${baseDate}T${endTime}:00Z`),
+              },
+            ];
+          }
+          return [];
+        }
+      );
+    
+      if (user.availability) {
+        await db.availability.update({
+          where: { id: user.availability.id },
+          data: {
+            timeGap: data.timeGap,
+            days: {
+              deleteMany: {},
+              create: availabilityData,
+            },
+          },
+        });
+      } else {
+        await db.availability.create({
+          data: {
+            userId: user.id,
+            timeGap: data.timeGap,
+            days: {
+              create: availabilityData,
+            },
+          },
+        });
+      }
+    
+      return { success: true };
 }
