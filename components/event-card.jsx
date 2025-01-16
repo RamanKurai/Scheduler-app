@@ -36,6 +36,8 @@ const EventCard = ({ event, username, isPublic = false }) => {
       router.refresh();
     }
   };
+
+  
   return (
     <Card className="flex flex-col justify-between cursor-pointer">
       <CardHeader>
