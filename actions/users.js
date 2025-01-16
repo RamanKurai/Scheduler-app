@@ -23,9 +23,7 @@ export async function updateUsername(username) {
 
   // })
   
-  const { userId } = await auth();
-  console.log(userId);
-  
+  const { userId } = await auth();  
   if (!userId) {
     throw new Error("Unauthorized");
   }
