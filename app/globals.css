@@ -74,4 +74,14 @@ body {
   .gradient-title {
     @apply font-extrabold bg-gradient-to-br from-blue-600 to-blue-400 bg-clip-text tracking-tighter text-transparent pb-4 pr-2;
   }
+
+  /* Hide Scrollbar */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* Internet Explorer */
+    scrollbar-width: none;    /* Firefox */
+  }
 }
