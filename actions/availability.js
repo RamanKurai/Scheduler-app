@@ -115,3 +115,64 @@ export async function updateAvailability(data) {
     
       return { success: true };
 }
+
+export async function getEventAvailability(eventId) {
+  const event = await db.event.findUnique({
+    where: { id: eventId },
+    include: {
+      user: {
+        include: {
+          availability: {
+            select: {
+              days: true,
+              timeGap: true,
+            },
+          },
+          bookings: {
+            select: {
+              startTime: true,
+              endTime: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!event || !event.user.availability) {
+    return [];
+  }
+
+  const { availability, bookings } = event.user;
+  const startDate = startOfDay(new Date());
+  const endDate = addDays(startDate, 30); // Get availability for the next 30 days
+
+  const availableDates = [];
+
+  for (let date = startDate; date <= endDate; date = addDays(date, 1)) {
+    const dayOfWeek = format(date, "EEEE").toUpperCase();
+    const dayAvailability = availability?.days?.find(
+      (d) => d.day === dayOfWeek
+    );
+
+    if (dayAvailability) {
+      const dateStr = format(date, "yyyy-MM-dd");
+
+      const slots = generateAvailableTimeSlots(
+        dayAvailability.startTime,
+        dayAvailability.endTime,
+        event.duration,
+        bookings,
+        dateStr,
+        availability.timeGap
+      );
+
+      availableDates.push({
+        date: dateStr,
+        slots,
+      });
+    }
+  }
+
+  return availableDates;
+}
