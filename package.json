@@ -25,6 +25,7 @@
     "day": "^0.0.2",
     "embla-carousel-autoplay": "^8.5.1",
     "embla-carousel-react": "^8.5.1",
+    "googleapis": "^144.0.0",
     "lucide-react": "^0.469.0",
     "next": "^15.1.4",
     "picker": "^0.1.4",

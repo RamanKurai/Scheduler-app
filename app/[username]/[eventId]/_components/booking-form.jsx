@@ -1,8 +1,9 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DayPicker } from "react-day-picker/";
+import { DayPicker } from "react-day-picker";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,6 +12,7 @@ import { createBooking } from "@/actions/booking";
 import { bookingSchema } from "@/app/lib/validator";
 import "react-day-picker/style.css";
 import useFetch from "@/hooks/use-fetch";
+
 export default function BookingForm({ event, availability }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
@@ -71,26 +73,26 @@ export default function BookingForm({ event, availability }) {
       )?.slots || []
     : [];
 
-//   if (data) {
-//     return (
-//       <div className="text-center p-10 border bg-white">
-//         <h2 className="text-2xl font-bold mb-4">Booking successful!</h2>
-//         {data.meetLink && (
-//           <p>
-//             Join the meeting:{" "}
-//             <a
-//               href={data.meetLink}
-//               target="_blank"
-//               rel="noopener noreferrer"
-//               className="text-blue-500 hover:underline"
-//             >
-//               {data.meetLink}
-//             </a>
-//           </p>
-//         )}
-//       </div>
-//     );
-//   }
+  if (data) {
+    return (
+      <div className="text-center p-10 border bg-white">
+        <h2 className="text-2xl font-bold mb-4">Booking successful!</h2>
+        {data.meetLink && (
+          <p>
+            Join the meeting:{" "}
+            <a
+              href={data.meetLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline"
+            >
+              {data.meetLink}
+            </a>
+          </p>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-8 p-10 border bg-white">

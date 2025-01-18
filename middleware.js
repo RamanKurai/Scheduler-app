@@ -9,12 +9,12 @@ const isProtectedRoute = createRouteMatcher([
 
 export default clerkMiddleware(async (auth, req) => {
   const authData = await auth();
-  console.log({authData})
 
   if (!authData.userId && isProtectedRoute(req)) {
     return authData.redirectToSignIn();
   }
 });
+
 export const config = {
   matcher: [
     // Skip Next.js internals and all static files, unless found in search params
