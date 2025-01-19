@@ -48,7 +48,7 @@ export default function DashboardPage() {
           <CardTitle>Welcome, {user?.firstName}!</CardTitle>
         </CardHeader>
         <CardContent>
-          {/* {!loadingUpdates ? (
+          {!loadingUpdates ? (
             <div className="space-y-6 font-light">
               <div>
                 {upcomingMeetings && upcomingMeetings?.length > 0 ? (
@@ -71,7 +71,7 @@ export default function DashboardPage() {
             </div>
           ) : (
             <p>Loading updates...</p>
-          )} */}
+          )}
         </CardContent>
       </Card>
 
