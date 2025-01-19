@@ -5,7 +5,8 @@ import { notFound } from 'next/navigation';
 import React from 'react'
 
 export async function generateMetadata({ params }) {
-  const user = await getUserByUsername(params.username);
+  const { username} = await params;
+  const user = await getUserByUsername(username);
 
   if (!user) {
     return {
@@ -20,7 +21,8 @@ export async function generateMetadata({ params }) {
 }
 
 const UserProfilePage = async ({ params}) => {
-  const user = await getUserByUsername(params.username);
+  const { username} = await params;
+  const user = await getUserByUsername(username);
 
   if (!user) {
     notFound();
@@ -47,7 +49,7 @@ const UserProfilePage = async ({ params}) => {
             <EventCard
               key={event.id}
               event={event}
-              username={params.username}
+              username={username}
               isPublic
             />
           ))}

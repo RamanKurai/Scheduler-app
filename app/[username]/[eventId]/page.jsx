@@ -6,7 +6,8 @@ import BookingForm from './_components/booking-form';
 import { getEventAvailability } from '@/actions/availability';
 
 export async function generateMetadata({ params }) {
-  const event = await getEventDetails(params.username , params.eventId);
+  const {username , eventId} = await params;
+  const event = await getEventDetails(username , eventId);
 
   if (!event) {
     return {
@@ -21,8 +22,10 @@ export async function generateMetadata({ params }) {
 }
 
 const EventPage = async ({ params}) => {
-    const event = await getEventDetails(params.username , params.eventId);
-    const availability = await getEventAvailability(params.eventId);
+  const {username , eventId} = await params;
+
+    const event = await getEventDetails(username , eventId);
+    const availability = await getEventAvailability(eventId);
   if (!event) {
     notFound();
   }
