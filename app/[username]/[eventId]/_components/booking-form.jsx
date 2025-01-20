@@ -41,8 +41,6 @@ export default function BookingForm({ event, availability }) {
   const { loading, data, fn: fnCreateBooking } = useFetch(createBooking);
 
   const onSubmit = async (data) => {
-    console.log("Form submitted with data:", data);
-
     if (!selectedDate || !selectedTime) {
       console.error("Date or time not selected");
       return;

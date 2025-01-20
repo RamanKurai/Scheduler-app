@@ -5,7 +5,7 @@ import { auth, clerkClient } from "@clerk/nextjs/server";
 import { google } from "googleapis";
 
 export async function getUserMeetings(type = "upcoming") {
-  const { userId } = auth();
+  const { userId } = await auth();
   if (!userId) {
     throw new Error("Unauthorized");
   }
@@ -46,7 +46,7 @@ export async function getUserMeetings(type = "upcoming") {
 }
 
 export async function cancelMeeting(meetingId) {
-  const { userId } = auth();
+  const { userId } =  await auth();
   if (!userId) {
     throw new Error("Unauthorized");
   }

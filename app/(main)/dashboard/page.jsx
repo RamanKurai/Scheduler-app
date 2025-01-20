@@ -11,6 +11,8 @@ import { updateUsername } from "@/actions/users";
 import { BarLoader } from "react-spinners";
 import useFetch from "@/hooks/use-fetch";
 import { usernameSchema } from "@/app/lib/validator";
+import { getLatestUpdates } from "@/actions/dashboard";
+import { format } from "date-fns";
 
 export default function DashboardPage() {
   const { user, isLoaded } = useUser();
@@ -29,11 +31,15 @@ export default function DashboardPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoaded]);
 
- 
+  const {
+    loading: loadingUpdates,
+    data: upcomingMeetings,
+    fn: fnUpdates,
+  } = useFetch(getLatestUpdates);
 
-  // useEffect(() => {
-  //   (async () => await fnUpdates())();
-  // }, []);
+  useEffect(() => {
+    (async () => await fnUpdates())();
+  }, []);
 
   const { loading, error, fn: fnUpdateUsername } = useFetch(updateUsername);
 
