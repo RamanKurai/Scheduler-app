@@ -23,7 +23,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "day": "^0.0.2",
-    "embla-carousel-autoplay": "^8.5.1",
+    "embla-carousel-autoplay": "^8.5.2",
     "embla-carousel-react": "^8.5.1",
     "googleapis": "^144.0.0",
     "lucide-react": "^0.469.0",
