@@ -13,10 +13,11 @@ import useFetch from "@/hooks/use-fetch";
 import { usernameSchema } from "@/app/lib/validator";
 import { getLatestUpdates } from "@/actions/dashboard";
 import { format } from "date-fns";
+import { useRouter } from "next/router";
+import { getBasePath } from "@/lib/utils";
 
 export default function DashboardPage() {
   const { user, isLoaded } = useUser();
-
   const {
     register,
     handleSubmit,
@@ -89,7 +90,7 @@ export default function DashboardPage() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
               <div className="flex items-center gap-2">
-                <span>{window?.location.origin}/</span>
+                <span>{getBasePath()}/</span>
                 <Input {...register("username")} placeholder="username" />
               </div>
               {errors.username && (
