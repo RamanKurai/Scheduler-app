@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "vercel-build": "prisma generate && next build"
+    "vercel-build": "node -e \"console.log('DATABASE_URL=', process.env.DATABASE_URL)\" && prisma generate && next build"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.9.6",
