@@ -1,0 +1,6 @@
+{
+  "WillLuke.nextjs.addTypesOnSave": true,
+  "WillLuke.nextjs.hasPrompted": true,
+  "prisma.pinToPrisma6": true,
+  "postman.settings.dotenv-detection-notification-visibility": false
+}

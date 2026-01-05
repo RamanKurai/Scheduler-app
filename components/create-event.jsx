@@ -25,12 +25,16 @@ const CreateEventDrawer = () => {
     }
   }, [searchParams]);
 
-  const handleClose = () => {
-    setIsOpen(false);
-    if (searchParams.get("create") === "true") {
-      router.replace(`${getBasePath()}/${router.asPath}`);
-    }
-  };
+const handleClose = () => {
+  setIsOpen(false);
+
+  if (searchParams.get("create") === "true") {
+    const current = new URL(window.location.href);
+    current.searchParams.delete("create");
+    router.replace(current.toString());
+  }
+};
+
   return (
     <Suspense>
       <Drawer open={isOpen} onClose={handleClose}>
