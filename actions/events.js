@@ -1,3 +1,4 @@
+export const runtime = "nodejs";
 "use server";
 import { auth } from "@clerk/nextjs/server";
 import { eventSchema } from "@/app/lib/validator";

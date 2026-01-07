@@ -13,7 +13,6 @@ import useFetch from "@/hooks/use-fetch";
 import { usernameSchema } from "@/app/lib/validator";
 import { getLatestUpdates } from "@/actions/dashboard";
 import { format } from "date-fns";
-import { useRouter } from "next/router";
 import { getBasePath } from "@/lib/utils";
 
 export default function DashboardPage() {
